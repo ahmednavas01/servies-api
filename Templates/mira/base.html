@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block title %}
+    <title>Hello, world!</title>
+    {% endblock %}
+    <style>
+      /* Custom styles to position input and button outside the border */
+      .custom-input-container {
+          position: relative;
+          margin-top: 20px; /* Adjust as needed */
+      }
+      .custom-input-container input, 
+      .custom-input-container button {
+        width:300px;
+       
+          top: 0;
+      }
+      .custom-input-container .signup{
+        text-decoration: none;
+        color:#fff;
+        padding-left: 25px;
+        padding-right: 25px;
+        background-color: #000;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-radius: 15px;
+        letter-spacing: 1px;
+      }
+      .custom-input-container input {
+        border: 2px solid black ;
+        width:300px;
+          left: 0;
+          z-index: 1;
+      }
+      .custom-input-container button {
+          left: calc(100% + 5px); /* Adjust spacing between input and button */
+          z-index: 2;
+      }
+
+      .footer{
+        height: 7vh;
+      }
+
+      .gpt{
+        width: 130px;
+        border-radius: 10px;
+        font-size:large ;
+        font-weight: 600  ;
+      }
+
+  </style>
+      {% block css %}
+
+      {% endblock %}
+  </head>
+  <body>
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container-fluid">
+      <div class="col-4 offset-5 col-sm-4 offset-sm-5">
+    <a class="navbar-brand " href="#">
+      <img src="{% static 'image/navasgpt.jpeg' %}" alt="" height="45" class="d-inline-block align-text-center">
+
+    </a>
+          </div>
+
+     {% block logout %}  {% endblock %}
+  </div>
+</nav>
+
+{% block template %}
+
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <footer class="container-fluid bg-dark footer"><p>copyright</p></footer>
+  </body>
+</html>

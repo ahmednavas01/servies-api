@@ -1,0 +1,62 @@
+{% extends 'mira/base.html' %}
+{% block title %}
+<title>NAVASGPT</title>
+{% endblock title %} {% block template %}
+<div
+  class="container d-flex align-items-center justify-content-center "
+  style="height: 83vh"
+>
+  <div>
+    {% if code %}
+    <h1>Verify your email</h1>
+    {% else %}
+    <h1>Welcome to NavasGpt</h1>
+    {% endif %}
+
+
+  <div class="container">
+    <div class="row">
+        <div class="col-12">
+            
+            <form  method='POST' >
+                {% csrf_token %}
+                <div class="custom-input-container">
+                    {% if email_verify %}
+                      <input type="text" class="form-control" placeholder="enter your email" name="mail" value={{email_verify}} disabled>
+                    {% else %}
+                    <input type="text" class="form-control" placeholder="enter your email" name="email">
+                    {% endif %}
+
+                    <br>
+                    {% if code %}
+                    <input type="text" class="form-control" placeholder="enter your code.." name="otp">
+                    <p>check you email..<a href="#" class='mx-2 '><b>click</b></a></p>
+                    <input
+                    class="btn  mt-2 btn-dark btn-round gpt"
+                    type="submit"
+                    name="create"
+                    value="create"
+                  />
+                    {% else %}
+                    <input
+                    class="btn  mt-2 btn-dark btn-round gpt"
+                    type="submit"
+                    name="verify"
+                    value="verify"
+                  />
+                  <p class="mt-4">Already have an account?  <a class='signup'href="login" ><b >login</b></a></p>
+
+                    {% endif %}
+                </div>
+            </form> 
+        </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% if otp_error %}
+<script>alert("OPT time out try again!..")</script>
+{% endif %}

@@ -1,0 +1,91 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    nav li {
+        margin-right: 20px;
+    }
+    
+    nav a {
+        color: #fff;
+        text-decoration: none;
+    }
+    
+    main {
+        display: fl
+    }    
+</style>
+
+<header>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home">
+    <h1>Welcome to my portfolio!</h1>
+    <p>This is a sample portfolio template for a web developer.</p>
+    <button class="btn" id="model-btn">View Model</button>
+  </section>
+  
+  <section id="portfolio">
+    <h1>My Portfolio</h1>
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <img src="image1.jpg" alt="Project 1">
+        <h2>Project 1</h2>
+        <p>.</p>
+      </div>
+      <div class="portfolio-item">
+        <img src="image2.jpg" alt="Project 2">
+        <h2>Project 2</h2>
+        <p>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h1>About Me</h1>
+    <p>This is a sample about page.</p>
+  </section>
+</main>
+
+<script >
+    const modelBtn = document.getElementById("model-btn");
+    const modelContainer = document.getElementById("model-container");
+    
+    modelBtn.addEventListener("click", () => {
+        modelContainer.style.transform = "translateY(0)";
+    });
+    
+    modelContainer.addEventListener("click", () => {
+        modelContainer.style.transform = "translateY(-100%)";
+    });
+    
+</script>

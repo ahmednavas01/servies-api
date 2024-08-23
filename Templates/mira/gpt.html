@@ -1,0 +1,203 @@
+{% extends 'mira/base.html' %}
+{% block title %}
+<title>NAVASGPT</title>
+
+
+{% endblock title %}
+
+
+
+{% block css %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    width: 800px;
+    max-width: 100%;
+    height: 600px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    background: #007bff;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.chat-body {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 75%;
+    position: relative;
+}
+
+.bot-message {
+    background: #e1e1e1;
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.user-message {
+    background: #007bff;
+    color: #fff;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.chat-footer {
+    width:100%;
+    padding: 10px;
+    border-top: 1px solid #c4c0c0;
+}
+
+
+
+.custom-textarea {
+    border-radius: 5px;
+    resize: none;
+    border: none;
+    background:#ddd;
+    padding: 10;
+    color: #000; /* Adjust this color as needed */
+    outline: none;
+    /*overflow-y: hidden;*/
+    width: 100%; /* Adjust width as needed */
+   /* box-sizing: border-box;*/
+    padding-left: 15px;
+    padding-top: 20px;
+
+  }
+
+
+
+
+
+@media (min-width: 768px) {
+
+    #send-button {
+
+        margin-left: -20px; /* Space between textarea and button */
+        padding: 10px 30px; /* Padding inside the button */
+        background-color: #0a0a0a; /* Blue background for the button */
+        color: rgb(236, 231, 231); /* White text color */
+        border: none; /* Remove default border */
+        border-radius: 10px; /* Rounded corners for the button */
+        cursor: pointer; /* Pointer cursor on hover */
+        font-weight: 600;
+    }
+    #send-button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+}
+
+/* Media query for large screens (min-width: 1024px) */
+@media (min-width: 1024px) {
+
+   
+}
+
+</style>
+{% endblock %}
+
+
+{% block logout %} <a href="/logout/" class="btn btn-dark">logout</a> {% endblock %}
+{% block template %}
+<div class="chat-container">
+       
+        <div class="chat-body" id="chat-body">
+            <!-- Messages will be appended here -->
+             <h1 class='text-center mt-5'>NavasGpt</h1>
+        </div>
+
+
+       <div class="row">
+        <div class="col-9">
+            <div class="chat-footer">
+                <textarea id="message-input" placeholder="Message GPT" class="custom-textarea"></textarea>
+                <!-- <input type="text" id="message-input" placeholder="Type a message..."> -->
+             
+            </div>
+        </div>
+        <div class="col-3 mt-4">
+            <button id="send-button" class='btn btn-dark text-start' type="button">send</button>
+        </div>
+       </div>
+        
+
+        
+    </div>
+
+    <script>
+        // height code adjustment  
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.getElementById('message-input');
+          
+            function adjustHeight(el) {
+              el.style.height = 'auto'; // Reset height to auto to shrink if needed
+              el.style.height = `100px`; // Set height to scrollHeight
+            }
+          
+            textarea.addEventListener('input', () => adjustHeight(textarea));
+            
+            // Initial adjustment
+            //adjustHeight(textarea);
+          });
+
+
+        //start ajax code 
+        $(document).ready(function() {
+            $('#send-button').click(function() {
+                var message = $('#message-input').val();
+                if (message.trim() === '') return;
+
+                $('#chat-body').append('<div class="message user-message"><pre>' + message + '</pre></div>');
+                $('#message-input').val('');
+
+                $.ajax({
+                    url: '{% url "chat_view" %}',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'message': message }),
+                    success: function(response) {
+                        $('#chat-body').append('<div class="message bot-message"><pre>' + response.bot_response + '</pre></div>');
+                        $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#chat-body').append('<div class="message bot-message"><p>Error: ' + error + '</p></div>');
+                        $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
+                    }
+                });
+            });
+
+            $('#message-input').keypress(function(event) {
+                if (event.which == 13) { // Enter key pressed
+                    $('#send-button').click();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
